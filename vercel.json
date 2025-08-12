@@ -3,9 +3,21 @@
   "name": "trivia-application",
   "builds": [
     {
-      "src": "package.json",
+      "src": "backend/package.json",
+      "use": "@vercel/next"
+    },
+    {
+      "src": "frontend/package.json",
       "use": "@vercel/static-build",
       "config": {
+        "distDir": "dist"
+      }
+    },
+    {
+      "src": "package.json",
+      "use": "@vercel/node",
+      "config": {
+        "installCommand": "npm run install:all",
         "buildCommand": "npm run build"
       }
     }
@@ -13,7 +25,7 @@
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "backend/src/app/api/$1"
+      "dest": "backend/$1"
     },
     {
       "src": "/(.*)",
