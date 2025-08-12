@@ -1,5 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+interface TriviaAPIQuestion {
+  category: string;
+  type: string;
+  difficulty: string;
+  question: string;
+  correct_answer: string;
+  incorrect_answers: string[];
+}
+
 /*
 TRIVIA CATEGORIES FOR FRONTEND REFERENCE:
 - 9: General Knowledge
@@ -102,7 +111,7 @@ export async function GET(request: NextRequest) {
     }
 
     // add ID and mixed answers to each question
-    const questions = apiData.results.map((q: any, index: number) => ({
+    const questions = apiData.results.map((q: TriviaAPIQuestion, index: number) => ({
       ...q, 
       id: `q_${Date.now()}_${index}`,
       question: decodeHtmlEntities(q.question),
