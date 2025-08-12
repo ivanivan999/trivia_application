@@ -10,7 +10,7 @@ interface QuizProps {
 
 export default function Quiz({ gameState, setGameState, onGameEnd }: QuizProps) {
   const [loading, setLoading] = useState(true);
-  const [selectedAnswer, setSelectedAnswer] = useState('');
+  const [_selectedAnswer, setSelectedAnswer] = useState('');
   const [showResult, setShowResult] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
   const [showWinMessage, setShowWinMessage] = useState(false);
