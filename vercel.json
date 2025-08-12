@@ -3,14 +3,9 @@
   "name": "trivia-application",
   "builds": [
     {
-      "src": "backend/package.json",
-      "use": "@vercel/next"
-    },
-    {
-      "src": "frontend/package.json",
+      "src": "package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "dist",
         "buildCommand": "npm run build"
       }
     }
@@ -18,12 +13,11 @@
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "backend/$1"
+      "dest": "backend/src/app/api/$1"
     },
     {
       "src": "/(.*)",
       "dest": "frontend/dist/$1"
     }
-  ],
-  "outputDirectory": "frontend/dist"
+  ]
 }
