@@ -1,11 +1,19 @@
 {
   "version": 2,
   "name": "trivia-application",
-  "buildCommand": "npm run build",
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "buildCommand": "npm run build"
+      }
+    }
+  ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "backend/$1"
+      "dest": "backend/src/app/api/$1"
     },
     {
       "src": "/(.*)",
