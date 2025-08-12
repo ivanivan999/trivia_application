@@ -32,9 +32,6 @@ A full-stack trivia game built with Next.js backend and React + Vite frontend, f
 - **React Confetti** for celebration effects
 - **@fireworks-js/react** for win celebrations
 
-### Deployment
-- **Vercel** for hosting
-- **npm workspaces** for monorepo management
 
 ## 🚀 Getting Started
 
@@ -62,12 +59,12 @@ npm install
 npm run dev:backend
 ```
 
-**Frontend (Port 5173):**
+**Frontend (Port 3000):**
 ```bash
 npm run dev:frontend
 ```
 
-4. Open your browser and navigate to `http://localhost:5173`
+4. Open your browser and navigate to `http://localhost:3000`
 
 ### Production Build
 
@@ -120,10 +117,6 @@ trivia_application/
 ├── shared/           # Shared utilities
 └── package.json      # Workspace configuration
 ```
-
-## 🌐 Live Demo
-
-Visit the live application: [Trivia Application on Vercel](https://your-app-url.vercel.app)
 
 
 ## 📄 License
