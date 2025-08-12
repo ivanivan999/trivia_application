@@ -1,4 +1,7 @@
+import Confetti from 'react-confetti';
+// import { useWindowSize } from 'react-use';
 import type { GameState } from '../types/GameState';
+
 
 interface ResultsProps {
   gameState: GameState;
@@ -6,6 +9,7 @@ interface ResultsProps {
 }
 
 export default function Results({ gameState, onRestart }: ResultsProps) {
+  // const { width, height } = useWindowSize();
   const percentage = Math.round((gameState.correctAnswers / gameState.questions.length) * 100);
 
   // Calculate difficulty success rates
@@ -54,6 +58,10 @@ export default function Results({ gameState, onRestart }: ResultsProps) {
 
   return (
     <div className="max-w-4xl mx-auto">
+      <Confetti
+        width={Math.min(window.innerWidth, document.documentElement.clientWidth)}
+        height={window.innerHeight}
+      />
       <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20 text-center">
         <h2 className="text-4xl font-bold text-white mb-2">Quiz Complete!</h2>
         

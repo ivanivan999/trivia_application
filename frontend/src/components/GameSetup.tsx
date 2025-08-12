@@ -1,5 +1,7 @@
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 import type { GameSettings } from '../types/GameState';
+
 
 interface GameSetupProps {
   onStartGame: (settings: GameSettings) => void;
@@ -35,6 +37,12 @@ export default function GameSetup({ onStartGame }: GameSetupProps) {
   };
 
   return (
+    <motion.div 
+      className="max-w-2xl mx-auto"
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+    >
     <div className="max-w-2xl mx-auto">
       <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20">
         <div className="flex items-center gap-3 mb-6">
@@ -49,7 +57,7 @@ export default function GameSetup({ onStartGame }: GameSetupProps) {
             </label>
             <div className="grid grid-cols-4 gap-2">
               {DIFFICULTY_OPTIONS.map(({ level, emoji, color }) => (
-                <button
+                <motion.button
                   key={level}
                   onClick={() => setDifficulty(level)}
                   className={`p-4 rounded-xl font-semibold transition-all duration-200 ${
@@ -57,9 +65,11 @@ export default function GameSetup({ onStartGame }: GameSetupProps) {
                       ? `bg-gradient-to-r ${color} text-white transform scale-105 shadow-lg`
                       : 'bg-white/20 text-blue-100 hover:bg-white/30 hover:scale-102'
                   }`}
+                  whileHover={{ scale: 1.05, y: -2 }}  // Lift up slightly on hover
+                  whileTap={{ scale: 0.95 }}           // Shrink slightly when clicked
                 >
                   {emoji} {level.charAt(0).toUpperCase() + level.slice(1)}
-                </button>
+                </motion.button>
               ))}
             </div>
             {difficulty === 'random' && (
@@ -112,10 +122,11 @@ export default function GameSetup({ onStartGame }: GameSetupProps) {
             onClick={handleStart}
             className="w-full bg-gradient-to-r from-purple-500 to-pink-600 text-white font-bold py-4 px-6 rounded-xl hover:from-purple-600 hover:to-pink-700 transition-all duration-200 flex items-center justify-center gap-3 text-lg transform hover:scale-105 shadow-lg hover:shadow-xl"
           >
-            🚀 Start Quiz
+             Start Quiz
           </button>
         </div>
       </div>
     </div>
+    </motion.div>
   );
 }

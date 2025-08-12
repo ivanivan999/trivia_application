@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import type { GameState } from '../types/GameState';
+import { Fireworks } from '@fireworks-js/react';
 
 interface QuizProps {
   gameState: GameState;
@@ -13,7 +14,8 @@ export default function Quiz({ gameState, setGameState, onGameEnd }: QuizProps) 
   const [showResult, setShowResult] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
   const [showWinMessage, setShowWinMessage] = useState(false);
-  
+  const [hasWon, setHasWon] = useState(false);
+
   // Track which questions have been answered to prevent double counting
   const answeredQuestions = useRef(new Set<number>());
 
@@ -27,8 +29,9 @@ export default function Quiz({ gameState, setGameState, onGameEnd }: QuizProps) 
 
   // Check for win condition whenever correctAnswers changes
   useEffect(() => {
-    if (gameState.correctAnswers >= winThreshold && !showWinMessage) {
+    if (gameState.correctAnswers >= winThreshold && !hasWon) {
       setShowWinMessage(true);
+      setHasWon(true);
     }
   }, [gameState.correctAnswers, winThreshold, showWinMessage]);
 
@@ -152,6 +155,8 @@ export default function Quiz({ gameState, setGameState, onGameEnd }: QuizProps) 
 
   const handleWinContinue = () => {
     setShowWinMessage(false);
+    setShowResult(false);
+    setSelectedAnswer('');
     nextQuestion();
   };
 
@@ -162,9 +167,41 @@ export default function Quiz({ gameState, setGameState, onGameEnd }: QuizProps) 
   // Win condition modal
   if (showWinMessage) {
     return (
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-4xl mx-auto relative">
+        <div className="absolute inset-0 pointer-events-none">
+          <Fireworks
+            options={{
+              rocketsPoint: {
+                min: 0,
+                max: 100
+              },
+              hue: {
+                min: 0,
+                max: 360
+              },
+              delay: {
+                min: 30,
+                max: 60
+              },
+              acceleration: 1.05,
+              friction: 0.95,
+              gravity: 1.5,
+              particles: 50,
+              // trace: 3,
+              explosion: 5
+            }}
+            style={{
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              position: 'fixed',
+              background: 'transparent',
+              zIndex: 1
+            }}
+          />
+        </div>
         <div className="bg-gradient-to-br from-yellow-400/20 to-orange-500/20 backdrop-blur-md rounded-2xl p-8 border border-yellow-400/30 text-center">
-          <div className="text-8xl mb-6">🏆</div>
           <h2 className="text-4xl font-bold text-yellow-400 mb-4">Congratulations!</h2>
           <p className="text-2xl text-white mb-4">You've achieved the win condition!</p>
           <p className="text-lg text-yellow-200 mb-6">
@@ -193,13 +230,13 @@ export default function Quiz({ gameState, setGameState, onGameEnd }: QuizProps) 
                   onClick={handleWinContinue}
                   className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-8 rounded-xl transition-all duration-200"
                 >
-                  Continue Playing ➡️
+                  Continue Playing
                 </button>
                 <button
                   onClick={handleWinFinish}
                   className="bg-gradient-to-r from-yellow-500 to-orange-600 text-white font-bold py-3 px-8 rounded-xl hover:from-yellow-600 hover:to-orange-700 transition-all duration-200"
                 >
-                  Finish as Winner 🏁
+                  Finish as Winner
                 </button>
               </>
             ) : (
@@ -207,7 +244,7 @@ export default function Quiz({ gameState, setGameState, onGameEnd }: QuizProps) 
                 onClick={handleWinFinish}
                 className="bg-gradient-to-r from-yellow-500 to-orange-600 text-white font-bold py-3 px-8 rounded-xl hover:from-yellow-600 hover:to-orange-700 transition-all duration-200"
               >
-                Finish Quiz 🏁
+                Finish Quiz
               </button>
             )}
           </div>
@@ -322,7 +359,7 @@ export default function Quiz({ gameState, setGameState, onGameEnd }: QuizProps) 
               onClick={nextQuestion}
               className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-8 rounded-xl transition-all duration-200"
             >
-              {gameState.currentQuestion + 1 < gameState.questions.length ? 'Next Question ➡️' : 'Finish Quiz 🏁'}
+              {gameState.currentQuestion + 1 < gameState.questions.length ? 'Next Question' : 'Finish Quiz'}
             </button>
           </div>
         )}
