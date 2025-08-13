@@ -32,3 +32,12 @@ body {
   border: none;
   box-shadow: 0 4px 8px rgba(0,0,0,0.3);
 }
+
+.bg-grid {
+  background-color: #1a202c;
+  background-image: 
+    linear-gradient(rgba(255,255,255,.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+

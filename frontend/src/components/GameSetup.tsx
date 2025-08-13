@@ -21,10 +21,10 @@ const CATEGORIES = [
 ];
 
 const DIFFICULTY_OPTIONS = [
-  { level: 'easy' as const, emoji: '😊', color: 'from-green-500 to-emerald-600' },
-  { level: 'medium' as const, emoji: '🤔', color: 'from-yellow-500 to-orange-600' },
-  { level: 'hard' as const, emoji: '😤', color: 'from-red-500 to-pink-600' },
-  { level: 'random' as const, emoji: '🎲', color: 'from-purple-500 to-indigo-600' }
+  { level: 'easy' as const, color: 'from-green-500 to-emerald-600' },
+  { level: 'medium' as const, color: 'from-yellow-500 to-orange-600' },
+  { level: 'hard' as const, color: 'from-red-500 to-pink-600' },
+  { level: 'random' as const, color: 'from-purple-500 to-indigo-600' }
 ];
 
 export default function GameSetup({ onStartGame }: GameSetupProps) {
@@ -56,7 +56,7 @@ export default function GameSetup({ onStartGame }: GameSetupProps) {
               🎯 Difficulty Level
             </label>
             <div className="grid grid-cols-4 gap-2">
-              {DIFFICULTY_OPTIONS.map(({ level, emoji, color }) => (
+              {DIFFICULTY_OPTIONS.map(({ level, color }) => (
                 <motion.button
                   key={level}
                   onClick={() => setDifficulty(level)}
@@ -68,7 +68,7 @@ export default function GameSetup({ onStartGame }: GameSetupProps) {
                   whileHover={{ scale: 1.05, y: -2 }}  // Lift up slightly on hover
                   whileTap={{ scale: 0.95 }}           // Shrink slightly when clicked
                 >
-                  {emoji} {level.charAt(0).toUpperCase() + level.slice(1)}
+                  {level.charAt(0).toUpperCase() + level.slice(1)}
                 </motion.button>
               ))}
             </div>
